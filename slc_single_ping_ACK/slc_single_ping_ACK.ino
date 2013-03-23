@@ -1,7 +1,7 @@
 #define PIR 7
 
 int pirState = LOW;
-int val = 0;
+int val,smthd_val = 0;
 boolean executed = false;
 
 //uncomment when using ack
@@ -26,12 +26,13 @@ void loop() {
   }
 
   val = ping(PIR);
+  smthd_val = smooth(val, filter_val, smthd_val);
   delay(5);
 
   
   //build serial strings for PINGs
   pirStr = "0:";
-  pirStr = pirStr + val;
+  pirStr = pirStr + smthd_val;
   pirStr = pirStr + "\r\n";
 
   
@@ -108,6 +109,21 @@ void mySetup(){
   Serial.begin(9600);
   executed = true;
   delay(500);
+}
+
+int smooth(int data, float filterVal, float smoothedVal){
+
+
+  if (filterVal > 1){      // check to make sure param's are within range
+    filterVal = .99;
+  }
+  else if (filterVal <= 0){
+    filterVal = 0;
+  }
+
+  smoothedVal = (data * (1 - filterVal)) + (smoothedVal  *  filterVal);
+
+  return (int)smoothedVal;
 }
 
 
