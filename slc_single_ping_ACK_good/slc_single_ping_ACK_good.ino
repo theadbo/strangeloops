@@ -2,6 +2,7 @@
 
 int pirState = LOW;
 int val,smthd_val = 0;
+int filter_val = 0.5;
 boolean executed = false;
 
 //uncomment when using ack
@@ -45,6 +46,8 @@ void loop() {
     // clear the serial output, reset the string and flag
     Serial.flush();
     inputString = "";
+    // set the ackFound boolean back to false so we don't read when
+    // we don't want to
     ackFound = false;
   }
 //    // ************ //
