@@ -16,7 +16,7 @@ int videores=128;
 int videotex=0;//3
 boolean drawimg=true;
 String info="";
-float fps = 36;
+float fps = 60;
 PFont font = createFont("monaco",10);
 ArrayList blobs;
 
